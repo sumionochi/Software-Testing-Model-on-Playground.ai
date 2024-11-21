@@ -8,7 +8,6 @@ function layout({ children }: { children: React.ReactNode }) {
             <div className="flex flex-col flex-1 min-h-screen">
                 <header className="flex items-center justify-between px-2 pr-4 h-12">
                     <SidebarTrigger />
-                    workFlowPlayground.AI
                 </header>
                 <Separator />
                 <div className="overflow-auto">
