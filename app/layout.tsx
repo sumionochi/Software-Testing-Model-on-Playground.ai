@@ -4,6 +4,7 @@ import "./globals.css";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/AppSidebar";
 import { ThemeProvider } from 'next-themes'
+import IsAuthorised from "@/components/isAuthorised";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,12 +22,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <SidebarProvider>
-          <AppSidebar />
-          <main className="w-full">
-            {children}
-          </main>
-          </SidebarProvider>
+          <>
+            <SidebarProvider>
+            <main className="w-full">
+              {children}
+            </main>
+            </SidebarProvider>
+          </>
         </ThemeProvider>
       </body>
     </html>
