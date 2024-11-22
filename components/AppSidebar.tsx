@@ -1,8 +1,8 @@
 'use client'
 
 import { ArrowUpDown, Home, Key, Receipt, Settings, Sun, Moon } from 'lucide-react'
-import { useState } from "react"
 import { useTheme } from 'next-themes'
+import { usePathname } from 'next/navigation'
 
 import {
   Sidebar,
@@ -20,29 +20,29 @@ import { Separator } from './ui/separator'
 const items = [
   {
     title: "Home",
-    url: "#",
+    url: "/",
     icon: Home,
   },
   {
     title: "Workflows",
-    url: "#",
+    url: "/workflow",
     icon: ArrowUpDown,
   },
   {
     title: "Credentials",
-    url: "#",
+    url: "/credentials", 
     icon: Key,
   },
   {
     title: "Billing",
-    url: "#",
+    url: "/billing",
     icon: Receipt,
   },
 ]
 
 export function AppSidebar() {
-  const [activeIndex, setActiveIndex] = useState(0)
   const { theme, setTheme } = useTheme()
+  const pathname = usePathname()
 
   return (
     <Sidebar className="border-r-0">
@@ -72,21 +72,30 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item, index) => (
-                <SidebarMenuItem key={index} className='py-1'>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={activeIndex === index}
-                    className="h-10 [&[data-active=true]]:bg-rose-500 [&[data-active=true]]:text-rose-50"
-                    onClick={() => setActiveIndex(index)}
-                  >
-                    <a href={item.url}>
-                      <item.icon className="h-4 w-4" />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {items.map((item, index) => {
+                const isActive =
+                  item.url === '/'
+                    ? pathname === item.url
+                    : pathname.startsWith(item.url)
+                return (
+                  <SidebarMenuItem key={index} className='py-1'>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={isActive}
+                      className={`h-10 ${
+                        isActive
+                          ? 'bg-rose-500 rounded-xl text-rose-50'
+                          : 'text-gray-700 hover:text-white rounded-xl hover:bg-rose-500 dark:text-gray-300 dark:hover:bg-rose-700'
+                      } rounded`}
+                    >
+                      <a href={item.url} className="flex items-center gap-2">
+                        <item.icon className="h-4 w-4" />
+                        <span>{item.title}</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

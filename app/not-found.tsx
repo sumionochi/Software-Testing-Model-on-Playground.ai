@@ -24,7 +24,7 @@ export default function NotFoundPage() {
       <div className="text-center">
         <h1 className="text-8xl font-bold text-primary mb-4 animate-bounce">404</h1>
         <h2 className="text-3xl font-semibold mb-4">Oops! Page Not Found</h2>
-        <p className="text-muted-foreground mb-8 max-w-md">
+        <p className="text-muted-foreground mb-8 max-w-6xl">
           {excuse}
         </p>
       </div>

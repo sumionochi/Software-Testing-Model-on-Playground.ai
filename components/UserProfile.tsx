@@ -81,7 +81,7 @@ export function UserProfile() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="w-[2.25rem] h-[2.25rem] cursor-pointer">
         <Avatar>
-          <AvatarImage src={profile?.avatar_url || undefined} alt="User Profile" />
+          <AvatarImage src={profile.avatar_url || undefined} alt="User Profile" />
           <AvatarFallback>{user?.email?.charAt(0)}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
