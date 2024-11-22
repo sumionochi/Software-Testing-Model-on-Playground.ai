@@ -5,7 +5,7 @@ import { createClient } from '@/utils/supabase/server'
 
 export const runtime = 'edge';
 
-export async function GET(request: NextRequest) {
+export async function POST(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   const token_hash = searchParams.get('token_hash')
   const type = searchParams.get('type') as EmailOtpType | null
