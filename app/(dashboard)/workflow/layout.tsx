@@ -11,11 +11,11 @@ function layout({ children }: { children: React.ReactNode }) {
             <div className="flex h-screen w-full">
                 <div className="flex flex-col flex-1 min-h-screen">
                     <header className="flex flex-row items-center justify-between gap-2 px-2 pr-2 h-12">
+                        <UserProfile/>
                         <div className="flex flex-row items-center">
                             <AppSidebar />
                             <SidebarTrigger />
-                        </div>
-                        <UserProfile/>
+                        </div>                 
                     </header>
                     <Separator />
                     <div className="overflow-auto">

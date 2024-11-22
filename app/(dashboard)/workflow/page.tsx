@@ -83,22 +83,21 @@ function UserWorkflows() {
     return (
       <Card className="w-full">
         <CardContent className="pt-6">
-          <div className="flex flex-col items-start">
-            <div className="flex flex-row gap-2">
-              <h3 className="text-2xl font-bold">Workflow Wasteland</h3>
-              <div className="relative">
-                <Layers className="h-7 w-7 text-muted-foreground animate-pulse" />
-                <div className="absolute -top-2 -right-3 bg-destructive text-destructive-foreground text-[10px] font-bold rounded-full p-1 animate-bounce">
-                  ?!
+          <div className="flex flex-col items-start gap-4">
+            <div>
+              <div className="flex flex-row gap-2">
+                <h3 className="text-2xl font-bold">Workflow Wasteland</h3>
+                <div className="relative">
+                  <Layers className="h-7 w-7 text-muted-foreground animate-pulse" />
+                  <div className="absolute -top-2 -right-3 bg-destructive text-destructive-foreground text-[10px] font-bold rounded-full p-1 animate-bounce">
+                    ?!
+                  </div>
                 </div>
               </div>
-            </div>
             <p className="text-muted-foreground">{quote}</p>
-            <div className="w-full max-w-[200px] h-2 bg-muted rounded-full overflow-hidden">
-              <div className="w-0 h-full bg-primary animate-[grow_2s_ease-in-out_infinite]" />
             </div>
             <CreateWorkflowButton triggerText="Create Your First Workflow" />
-            <p className="text-sm mt-2 text-muted-foreground italic">
+            <p className="text-sm mt-0 text-muted-foreground italic">
               (No robots were harmed in the making of this message)
             </p>
           </div>

@@ -14,6 +14,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { Separator } from './ui/separator'
 
@@ -44,8 +45,12 @@ export function AppSidebar() {
   const { theme, setTheme } = useTheme()
   const pathname = usePathname()
 
+  const toggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark')
+  }
+
   return (
-    <Sidebar className="border-r-0">
+    <Sidebar side="right" collapsible="offcanvas" className="border-r-0">
       <SidebarHeader className="h-auto border-b-0 p-2 px-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 text-sidebar-foreground">
@@ -54,17 +59,8 @@ export function AppSidebar() {
             </div>
             <span className="font-semibold">Playground.ai</span>
           </div>
-          {/* Dark Mode Toggle */}
-          <button
-            className="p-2 rounded-full"
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          >
-            {theme === 'dark' ? (
-              <Sun className="h-4 w-4 text-yellow-500 hover:text-rose-400" />
-            ) : (
-              <Moon className="h-4 w-4 text-gray-900 hover:text-rose-500" />
-            )}
-          </button>
+          {/* Sidebar Toggle */}
+          <SidebarTrigger/>
         </div>
       </SidebarHeader>
       <Separator />
@@ -78,7 +74,7 @@ export function AppSidebar() {
                     ? pathname === item.url
                     : pathname.startsWith(item.url)
                 return (
-                  <SidebarMenuItem key={index} className='py-1'>
+                  <SidebarMenuItem key={index} className="py-1">
                     <SidebarMenuButton
                       asChild
                       isActive={isActive}
@@ -86,7 +82,7 @@ export function AppSidebar() {
                         isActive
                           ? 'bg-rose-500 rounded-xl text-rose-50'
                           : 'text-gray-700 hover:text-white rounded-xl hover:bg-rose-500 dark:text-gray-300 dark:hover:bg-rose-700'
-                      } rounded`}
+                      }`}
                     >
                       <a href={item.url} className="flex items-center gap-2">
                         <item.icon className="h-4 w-4" />
@@ -96,6 +92,27 @@ export function AppSidebar() {
                   </SidebarMenuItem>
                 )
               })}
+              {/* Dark Mode Toggle Button */}
+              <SidebarMenuItem className="py-1">
+                <SidebarMenuButton
+                  asChild
+                  className="h-10 text-gray-700 hover:text-white rounded-xl hover:bg-rose-500 dark:text-gray-300 dark:hover:bg-rose-700"
+                >
+                  <button onClick={toggleTheme} className="flex items-center gap-2">
+                    {theme === 'dark' ? (
+                      <>
+                        <Sun className="h-4 w-4 text-yellow-500" />
+                        <span className='text-yellow-500'>Turn on Light Mode</span>
+                      </>
+                    ) : (
+                      <>
+                        <Moon className="h-4 w-4" />
+                        <span>Turn on Dark Mode</span>
+                      </>
+                    )}
+                  </button>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

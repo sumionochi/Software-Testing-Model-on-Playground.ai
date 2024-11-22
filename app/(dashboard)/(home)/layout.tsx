@@ -10,16 +10,16 @@ function layout({ children }: { children: React.ReactNode }) {
         <IsAuthorised>
             <div className="flex h-screen w-full">
                 <div className="flex flex-col flex-1 min-h-screen">
-                    <header className="flex flex-row items-center justify-between gap-2 px-2 pr-2 h-12 max-w-6xl">
+                    <header className="flex flex-row items-center justify-between gap-2 px-2 pr-2 h-12">
+                        <UserProfile/>
                         <div className="flex flex-row items-center">
                             <AppSidebar />
                             <SidebarTrigger />
-                        </div>
-                        <UserProfile/>
+                        </div>       
                     </header>
                     <Separator />
-                    <div className="overflow-auto max-w-6xl mx-auto">
-                        <div className="flex-1 container p-4 py-4 text-accent-foreground">
+                    <div className="overflow-auto">
+                        <div className="flex-1 container p-4 py-4 text-accent-foreground max-w-6xl mx-auto">
                             {children}
                         </div>
                     </div>

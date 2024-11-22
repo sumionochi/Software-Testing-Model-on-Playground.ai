@@ -12,7 +12,7 @@ interface Props {
 
 function WorkflowButtonDialog(props: Props) {
   return (
-    <DialogHeader className="py-6">
+    <DialogHeader className="py-0">
       <DialogTitle asChild>
         <div className="flex flex-col items-center gap-2 mb-2">
           <Waypoints className="w-7 h-7 text-rose-500"/>
