@@ -2,10 +2,11 @@
 import React, { Suspense, useState, useEffect } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Bot, Plus, Terminal } from 'lucide-react';
+import { Bot, Layers, Plus, Terminal } from 'lucide-react';
 import { createClient } from "@/utils/supabase/client";
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button';
+import CreateWorkflowButton from '@/components/CreateWorkflowButton';
 
 interface Workflow {
   id: string;
@@ -82,24 +83,22 @@ function UserWorkflows() {
     return (
       <Card className="w-full">
         <CardContent className="pt-6">
-          <div className="flex flex-col items-start ">
-            <div className='flex flex-row gap-2'>
-                <h3 className="text-2xl font-bold">Workflow Wasteland</h3>
-                <div className="relative">
-                <Bot className="h-7 w-7 text-muted-foreground animate-pulse" />
+          <div className="flex flex-col items-start">
+            <div className="flex flex-row gap-2">
+              <h3 className="text-2xl font-bold">Workflow Wasteland</h3>
+              <div className="relative">
+                <Layers className="h-7 w-7 text-muted-foreground animate-pulse" />
                 <div className="absolute -top-2 -right-3 bg-destructive text-destructive-foreground text-[10px] font-bold rounded-full p-1 animate-bounce">
-                    ?!
+                  ?!
                 </div>
-                </div>
+              </div>
             </div>
             <p className="text-muted-foreground">{quote}</p>
             <div className="w-full max-w-[200px] h-2 bg-muted rounded-full overflow-hidden">
               <div className="w-0 h-full bg-primary animate-[grow_2s_ease-in-out_infinite]" />
             </div>
-            <Button className="mb-2 flex items-center">
-              <Plus className="mr-2 h-4 w-4" /> Create Your First Workflow
-            </Button>
-            <p className="text-sm text-muted-foreground italic">
+            <CreateWorkflowButton triggerText="Create Your First Workflow" />
+            <p className="text-sm mt-2 text-muted-foreground italic">
               (No robots were harmed in the making of this message)
             </p>
           </div>
