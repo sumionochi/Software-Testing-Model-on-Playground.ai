@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
-import { Loader } from 'lucide-react';
 
 const IsAuthorised = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);

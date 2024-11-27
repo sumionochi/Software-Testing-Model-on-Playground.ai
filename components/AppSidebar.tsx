@@ -51,7 +51,7 @@ export function AppSidebar() {
 
   return (
     <Sidebar side="right" collapsible="offcanvas" className="border-r-0">
-      <SidebarHeader className="h-auto border-b-0 p-2 px-4">
+      <SidebarHeader className="h-auto border-b-0 p-3.5 px-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 text-sidebar-foreground">
             <div className="flex h-6 w-6 items-center justify-center rounded bg-rose-500 text-white">
@@ -80,8 +80,8 @@ export function AppSidebar() {
                       isActive={isActive}
                       className={`h-10 ${
                         isActive
-                          ? 'bg-rose-500 rounded-xl text-rose-50'
-                          : 'text-gray-700 hover:text-white rounded-xl hover:bg-rose-500 dark:text-gray-300 dark:hover:bg-rose-700'
+                          ? 'bg-rose-500 rounded-md text-rose-50'
+                          : 'text-gray-700 hover:text-white rounded-md hover:bg-rose-500 dark:text-gray-300 dark:hover:bg-rose-700'
                       }`}
                     >
                       <a href={item.url} className="flex items-center gap-2">
@@ -96,13 +96,13 @@ export function AppSidebar() {
               <SidebarMenuItem className="py-1">
                 <SidebarMenuButton
                   asChild
-                  className="h-10 text-gray-700 hover:text-white rounded-xl hover:bg-rose-500 dark:text-gray-300 dark:hover:bg-rose-700"
+                  className="h-10 text-gray-700 hover:text-white rounded-md hover:bg-rose-500 dark:text-gray-300 dark:hover:bg-rose-700"
                 >
                   <button onClick={toggleTheme} className="flex items-center gap-2">
                     {theme === 'dark' ? (
                       <>
                         <Sun className="h-4 w-4 text-yellow-500" />
-                        <span className='text-yellow-500'>Turn on Light Mode</span>
+                        <span className=''>Turn on Light Mode</span>
                       </>
                     ) : (
                       <>

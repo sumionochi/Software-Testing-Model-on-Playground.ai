@@ -9,17 +9,18 @@ function layout({ children }: { children: React.ReactNode }) {
     return (
         <IsAuthorised>
             <div className="flex h-screen w-full">
-                <div className="flex flex-col flex-1 min-h-screen">
-                    <header className="flex flex-row items-center justify-between gap-2 px-2 pr-2 h-12">
-                        <UserProfile/>
-                        <div className="flex flex-row items-center">
-                            <AppSidebar />
+                <div className="flex flex-col flex-1 min-h-screen w-full">
+                    <header className="flex flex-row items-center justify-between gap-2 px-2 h-14">
+                        <div className="flex items-center px-4 justify-between w-full max-w-6xl mx-auto">
+                            <UserProfile />
+                            <div className="flex flex-row items-center">
+                            </div>
                             <SidebarTrigger />
-                        </div>       
+                        </div>
                     </header>
                     <Separator />
                     <div className="overflow-auto">
-                        <div className="flex-1 container p-4 py-4 text-accent-foreground max-w-6xl mx-auto">
+                        <div className="container flex-1 p-4 py-4 text-accent-foreground max-w-6xl mx-auto">
                             {children}
                         </div>
                     </div>

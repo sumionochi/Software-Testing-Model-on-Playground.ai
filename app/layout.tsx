@@ -5,6 +5,8 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import IsAuthorised from "@/components/isAuthorised";
 import AppProvider from "@/components/AppProvider"; // Import your AppProvider
+import { ProfileProvider } from "@/hooks/profileProvider";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,9 +25,15 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <AppProvider>
-          <SidebarProvider>
-            <main className="w-full">{children}</main>
-          </SidebarProvider>
+          <ProfileProvider>
+            <SidebarProvider>
+              <main className="w-full">
+                {children}
+                <AppSidebar/>
+                <Toaster richColors position="top-right" />
+              </main>
+            </SidebarProvider>
+          </ProfileProvider>
         </AppProvider>
       </body>
     </html>
