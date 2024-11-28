@@ -9,7 +9,7 @@ function layout({ children }: { children: React.ReactNode }) {
     return (
         <IsAuthorised>
             <div className="flex h-screen w-full">
-                <div className="flex flex-col flex-1 min-h-screen w-full">
+                <div className="flex flex-col flex-1 w-full">
                     <header className="flex flex-row items-center justify-between gap-2 px-2 h-14">
                         <div className="flex items-center px-4 justify-between w-full max-w-6xl mx-auto">
                             <UserProfile />

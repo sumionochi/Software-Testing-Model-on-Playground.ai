@@ -20,7 +20,7 @@ export default function NotFoundPage() {
   }, [])
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gradient-to-b from-background to-muted">
+    <div className="flex flex-col items-center justify-center p-4 bg-gradient-to-b from-background to-muted">
       <div className="text-center">
         <h1 className="text-8xl font-bold text-primary mb-4 animate-bounce">404</h1>
         <h2 className="text-3xl font-semibold mb-4">Oops! Page Not Found</h2>

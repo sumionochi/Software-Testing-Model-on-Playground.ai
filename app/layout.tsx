@@ -30,7 +30,7 @@ export default function RootLayout({
               <main className="w-full">
                 {children}
                 <AppSidebar/>
-                <Toaster richColors position="top-right" />
+                <Toaster richColors position="bottom-right" />
               </main>
             </SidebarProvider>
           </ProfileProvider>

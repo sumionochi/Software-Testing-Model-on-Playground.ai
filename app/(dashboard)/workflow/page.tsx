@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
@@ -10,6 +10,8 @@ import {
   Trash2,
   Edit,
   MoreVertical,
+  Pen,
+  Workflow,
 } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
 import {
@@ -37,6 +39,9 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import EditWorkflowForm from "@/components/EditWorkflowForm";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { Clock, Info } from 'lucide-react'
+import { useRouter } from 'next/navigation';
 
 interface Workflow {
   id: string;
@@ -269,6 +274,21 @@ function UserWorkflows() {
     setWorkflows((prev) => [newWorkflow, ...prev]);
   };
 
+  const router = useRouter();
+  const [isHovered, setIsHovered] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const cardRef = useRef<HTMLDivElement>(null);
+  
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (cardRef.current) {
+      const rect = cardRef.current.getBoundingClientRect();
+      setMousePosition({
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top,
+      });
+    }
+  };
+
   return (
     <>
       {isLoading && (
@@ -343,70 +363,98 @@ function UserWorkflows() {
 
       {!isLoading && !error && workflows.length > 0 && (
         <AnimatePresence>
-          <motion.div
-            className="space-y-4"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-          >
-            <CreateWorkflowButton
-              triggerText="Create New Workflow"
-              onWorkflowCreated={handleWorkflowCreated}
-            />
-            {workflows.map((workflow) => (
+        <motion.div
+          className="space-y-4"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+        >
+          <CreateWorkflowButton
+            triggerText="Create New Workflow"
+            onWorkflowCreated={handleWorkflowCreated}
+          />
+          <p className="text-sm text-right">Note : Click on the Workflow Card to Launch the Playground</p>
+          {workflows.map((workflow) => (
+            <TooltipProvider key={workflow.id}>
               <motion.div
                 layout
                 variants={cardVariants}
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                key={workflow.id}
+                className="cursor-pointer"
               >
-                <Card className="overflow-hidden">
-                  <CardHeader className="pb-4">
+                <Card className="overflow-hidden hover:shadow-md transition-shadow">
+                  <CardHeader className="p-4">
                     <div className="flex justify-between items-start">
-                      <CardTitle className="text-xl font-semibold">
-                        {workflow.name}
-                      </CardTitle>
-                      {/* **2. Updated Badge Component Using statusMap** */}
-                      <Badge
-                        variant={statusMap[workflow.status]?.variant || "default"}
+                      <div
+                        ref={cardRef}
+                        className="relative flex flex-col gap-2 p-4 w-full rounded-lg transition-shadow duration-200 ease-in-out cursor-pointer"
+                        onMouseEnter={() => setIsHovered(true)}
+                        onMouseLeave={() => setIsHovered(false)}
+                        onMouseMove={handleMouseMove}
+                        onClick={() => router.push(`/workflow/editor/${workflow.id}`)}
                       >
-                        {statusMap[workflow.status]?.label || workflow.status}
-                      </Badge>
+                        {/* Left Section */}
+                        <div>
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <Badge className="flex text-[12px] items-center p-1 py-0">
+                                <Clock className="w-3 h-3 mr-1" />
+                                <span>{format(new Date(workflow.updatedAt), "PP")}</span>
+                              </Badge>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Last updated</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </div>
+                        <CardTitle className="text-lg font-medium">
+                          {workflow.name}
+                          <p className="hidden md:inline opacity-70">: {workflow.description}</p>
+                        </CardTitle>
+                        
+                        {isHovered && (
+                          <div
+                            className="absolute bg-primary text-primary-foreground px-3 py-1 rounded-md text-sm font-medium shadow-sm"
+                            style={{
+                              left: `${mousePosition.x}px`,
+                              top: `${mousePosition.y}px`,
+                              transform: 'translate(-50%, -100%)',
+                              zIndex: 10,
+                              transition: 'opacity 0.2s',
+                              opacity: 1,
+                              pointerEvents: 'none',
+                            }}
+                          >
+                            Launch Playground
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Right Section: Badge and Options */}
+                      <div className="flex items-center space-x-2">
+                        <Badge
+                          variant={statusMap[workflow.status]?.variant || "default"}
+                          className="text-xs"
+                        >
+                          {statusMap[workflow.status]?.label || workflow.status}
+                        </Badge>
+                        <WorkflowOptions
+                          onEdit={openEditDialog}
+                          onDelete={onDelete}
+                          workflow={workflow}
+                        />
+                      </div>
                     </div>
                   </CardHeader>
-                  <CardContent>
-                    {workflow.description && (
-                      <p className="text-muted-foreground mb-4">
-                        {workflow.description}
-                      </p>
-                    )}
-                    <div className="flex items-center text-sm text-muted-foreground space-x-4">
-                      <span>
-                        Created {format(new Date(workflow.createdAt), "PP")}
-                      </span>
-                      <span>•</span>
-                      <span>
-                        Updated {format(new Date(workflow.updatedAt), "PP")}
-                      </span>
-                    </div>
-                  </CardContent>
-                  <CardFooter className="bg-muted/50 p-2">
-                    <div className="flex justify-end w-full">
-                      <WorkflowOptions
-                        onEdit={openEditDialog}
-                        onDelete={openDeleteDialog}
-                        workflow={workflow}
-                      />
-                    </div>
-                  </CardFooter>
                 </Card>
               </motion.div>
-            ))}
-          </motion.div>
-        </AnimatePresence>
+            </TooltipProvider>
+          ))}
+        </motion.div>
+      </AnimatePresence>
       )}
 
       {/* Delete Confirmation Dialog */}
