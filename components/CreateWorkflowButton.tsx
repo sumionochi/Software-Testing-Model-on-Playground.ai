@@ -1,5 +1,3 @@
-"use client"
-
 import React, { useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -12,9 +10,9 @@ import { CreateWorkFlowFormType, createWorkFlowForm } from "@/schema/workflowFor
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "./ui/input";
 import { useProfile } from "@/hooks/profileProvider";
-import { toast } from 'sonner'; // Import Sonner's toast
+import { toast } from 'sonner';
+import { useRouter } from "next/navigation";
 
-// Define the Workflow interface
 interface Workflow {
   id: string;
   name: string;
@@ -33,6 +31,7 @@ interface CreateWorkflowButtonProps {
 function CreateWorkflowButton({ triggerText, onWorkflowCreated }: CreateWorkflowButtonProps) {
   const [open, setOpen] = useState(false);
   const { profile, loading } = useProfile();
+  const router = useRouter();
 
   const form = useForm<CreateWorkFlowFormType>({
     resolver: zodResolver(createWorkFlowForm),
@@ -64,17 +63,19 @@ function CreateWorkflowButton({ triggerText, onWorkflowCreated }: CreateWorkflow
       const result = await response.json();
       console.log("Workflow created successfully:", result);
 
-      toast.success("Workflow created successfully!"); 
+      toast.success("Workflow created successfully!");
 
-      setOpen(false); 
-      form.reset(); 
+      setOpen(false);
+      form.reset();
+
+      router.push(`/workflow/editor/${result.id}`);
 
       if (onWorkflowCreated) {
-        onWorkflowCreated(result); 
+        onWorkflowCreated(result);
       }
     } catch (error) {
       console.error(error);
-      toast.error("Error creating workflow"); 
+      toast.error("Error creating workflow");
     }
   };
 
@@ -101,7 +102,7 @@ function CreateWorkflowButton({ triggerText, onWorkflowCreated }: CreateWorkflow
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name (optional)</FormLabel>
+                  <FormLabel>Name</FormLabel>
                   <FormControl>
                     <Input placeholder="Enter a descriptive Name." {...field} />
                   </FormControl>
@@ -114,10 +115,10 @@ function CreateWorkflowButton({ triggerText, onWorkflowCreated }: CreateWorkflow
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description (optional)</FormLabel>
+                  <FormLabel>Description</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Enter brief description on what your workflow is about."
+                      placeholder="Enter a brief description of your workflow."
                       {...field}
                     />
                   </FormControl>

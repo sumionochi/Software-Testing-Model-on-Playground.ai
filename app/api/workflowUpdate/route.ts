@@ -1,37 +1,38 @@
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "@/lib/prisma"; 
-import { createWorkFlowForm } from "@/schema/workflowForm"; 
+import prisma from "@/lib/prisma";
+import { createWorkFlowForm } from "@/schema/workflowForm"; // Assuming this is your validation schema
 import { z } from "zod";
 
-export async function POST(req: NextRequest) {
+export async function PUT(req: NextRequest) {
   try {
-    const body = await req.json(); 
+    const body = await req.json();
 
     const parsedBody = createWorkFlowForm.parse({
       name: body.name,
       description: body.description,
     });
 
-    const { userId, definition, status } = body;
+    const { id, userId, definition, status } = body;
 
-    if (!userId || !definition) {
+    if (!id || !userId || !definition) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
       );
     }
 
-    const workflow = await prisma.workflow.create({
+    const updatedWorkflow = await prisma.workflow.update({
+      where: { id },
       data: {
         userId,
-        name: parsedBody.name, 
+        name: parsedBody.name,
         description: parsedBody.description,
         definition,
-        status,
+        status: status,
       },
     });
 
-    return NextResponse.json(workflow, { status: 201 });
+    return NextResponse.json(updatedWorkflow, { status: 200 });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
@@ -40,9 +41,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    console.error("Error creating workflow:", error);
+    console.error("Error updating workflow:", error);
     return NextResponse.json(
-      { error: "Failed to create workflow" },
+      { error: "Failed to update workflow" },
       { status: 500 }
     );
   }
