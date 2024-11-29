@@ -6,6 +6,7 @@ import StringField from "./params/StringField";
 import { useReactFlow } from "@xyflow/react";
 import { PlaygroundNode } from "@/schema/playgroundNode";
 import { useCallback } from "react";
+import BrowserField from "./params/BrowserField";
 
 function NodeField({ param, nodeId }: { param: TaskParam, nodeId: string }) {
     const { updateNodeData, getNode } = useReactFlow();
@@ -33,6 +34,14 @@ function NodeField({ param, nodeId }: { param: TaskParam, nodeId: string }) {
               updateNodeParamValue={updateNodeParamValue}
             />
           );
+        case TaskParamType.BROWSER_INSTANCE:
+          return (
+            <BrowserField
+              param={param}
+              value={""}
+              updateNodeParamValue={updateNodeParamValue}
+            />
+          );  
         default:
           return (
             <div className="w-full">
