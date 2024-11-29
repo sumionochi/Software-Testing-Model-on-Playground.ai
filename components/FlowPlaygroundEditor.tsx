@@ -3,14 +3,19 @@
 import { CreateNode } from "@/lib/workflow/createNode";
 import { PlaygroundTaskType } from "@/schema/playgroundTask";
 import { Workflow } from "@prisma/client";
-import {Background, BackgroundVariant, Controls, ReactFlow, useEdgesState, useNodesState, useReactFlow } from "@xyflow/react";
+import {Background, BackgroundVariant, Connection, Controls, Edge, ReactFlow, addEdge, useEdgesState, useNodesState, useReactFlow } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import NodeComponent from "./Nodes/NodeComponent";
 import { useCallback, useEffect } from "react";
 import { PlaygroundNode } from "@/schema/playgroundNode";
+import DeleteEdge from "./Edges/DeleteEdge";
 
 const nodeTypes = {
   Node: NodeComponent,
+}
+
+const edgeTypes = {
+  default: DeleteEdge
 }
 
 const snapGrid: [number, number] = [50,50];
@@ -18,7 +23,7 @@ const fitViewOptions = {padding: 1};
 
 function FlowPlaygroundEditor({ workflow }: { workflow: Workflow }) {
   const [nodes, setNodes, onNodesChange] = useNodesState<PlaygroundNode>([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const { setViewport, screenToFlowPosition } = useReactFlow();
 
   useEffect(() => {
@@ -52,6 +57,11 @@ function FlowPlaygroundEditor({ workflow }: { workflow: Workflow }) {
     setNodes((nds) => nds.concat(newNode));
     
   }, []);  
+
+  const onConnect = useCallback((connection: Connection) => {
+    setEdges((eds) => addEdge({ ...connection, animated: true }, eds));
+  }, []);
+  
   
   return (
     <main className="h-full w-full">
@@ -61,20 +71,23 @@ function FlowPlaygroundEditor({ workflow }: { workflow: Workflow }) {
         onEdgesChange={onEdgesChange}
         onNodesChange={onNodesChange}
         nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
         snapToGrid={true}
         snapGrid={snapGrid}
         fitView
         fitViewOptions={fitViewOptions}
         onDragOver={onDragOver}
         onDrop={onDrop}
-        panOnScroll={true}  
-        panOnDrag={true}    
-        minZoom={0.5}  
-        maxZoom={2} 
+        panOnScroll={true}
+        panOnDrag={true}
+        minZoom={0.5}
+        maxZoom={2}
+        onConnect={onConnect}
       >
-        <Controls position="bottom-left" fitViewOptions={fitViewOptions}/>
-        <Background variant={BackgroundVariant.Dots} gap={12} size={1}/>
+        <Controls position="bottom-left" fitViewOptions={fitViewOptions} />
+        <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
       </ReactFlow>
+
     </main>
   );
 }
