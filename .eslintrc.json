@@ -2,5 +2,14 @@
     "extends": "next/core-web-vitals",
     "rules": {
       "react/no-unescaped-entities" : 1
-    }
+    },
+    "overrides": [
+      {
+        "files": ["*.js", "*.jsx", "*.ts", "*.tsx"],
+        "rules": {
+          "custom-rule-name": "value"
+        }
+      }
+    ]
+    
   }
