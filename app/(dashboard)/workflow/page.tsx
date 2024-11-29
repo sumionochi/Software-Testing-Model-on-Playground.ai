@@ -305,7 +305,6 @@ function UserWorkflows() {
     <>
     <Navbar/>
     <div className="max-w-6xl p-4 py-4 container mx-auto mt-14">
-      
       {isLoading && (
         <motion.div
           className="space-y-4"
@@ -385,6 +384,11 @@ function UserWorkflows() {
           animate="visible"
           exit="exit"
         >
+          <CreateWorkflowButton
+            triggerText="Create New Workflow"
+            onWorkflowCreated={handleWorkflowCreated}
+          />
+          <p className="text-sm text-right">Note : Click on the Workflow Card to Launch the Playground</p>
           {workflows.map((workflow) => (
             <TooltipProvider key={workflow.id}>
               <motion.div
@@ -400,7 +404,7 @@ function UserWorkflows() {
                   onMouseEnter={(event) => handleMouseEnter(workflow.id, event)}
                   onMouseLeave={handleMouseLeave}
                 >
-                  <CardHeader className="p-4">
+                  <CardHeader className="p-4 flex flex-row">
                     <div
                       className="relative flex flex-col gap-2 p-4 w-full rounded-lg transition-shadow duration-200 ease-in-out cursor-pointer"
                       onClick={() => router.push(`/workflow/editor/${workflow.id}`)}
@@ -447,12 +451,13 @@ function UserWorkflows() {
                     </div>
 
                     <div className="flex items-center space-x-2">
-                      <Badge
-                        variant={statusMap[workflow.status]?.variant || "default"}
-                        className="text-xs"
-                      >
-                        {statusMap[workflow.status]?.label || workflow.status}
-                      </Badge>
+                    <Badge
+                      variant={statusMap[workflow.status]?.variant}
+                      className={`text-xs ${workflow.status === 'Draft' ? 'bg-yellow-100 text-yellow-600 border border-black/10 hover:text-yellow-600 hover:bg-yellow-100 ' : ''}`}
+                    >
+                      {statusMap[workflow.status]?.label || workflow.status}
+                    </Badge>
+
                       <WorkflowOptions
                         onEdit={openEditDialog}
                         onDelete={onDelete}
