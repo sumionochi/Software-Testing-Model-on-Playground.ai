@@ -1,4 +1,5 @@
 import { AppSidebar } from "@/components/AppSidebar";
+import Navbar from "@/components/Navbar";
 import { UserProfile } from "@/components/UserProfile";
 import IsAuthorised from "@/components/isAuthorised";
 import { Separator } from "@/components/ui/separator";
@@ -10,17 +11,10 @@ function layout({ children }: { children: React.ReactNode }) {
         <IsAuthorised>
             <div className="flex h-screen w-full">
                 <div className="flex flex-col flex-1 w-full">
-                    <header className="flex flex-row items-center justify-between gap-2 px-2 h-14">
-                        <div className="flex items-center px-4 justify-between w-full max-w-6xl mx-auto">
-                            <UserProfile />
-                            <div className="flex flex-row items-center">
-                            </div>
-                            <SidebarTrigger />
-                        </div>
-                    </header>
+                    <Navbar/>
                     <Separator />
                     <div className="overflow-auto">
-                        <div className="container flex-1 p-4 py-4 text-accent-foreground max-w-6xl mx-auto">
+                        <div className="flex-1 p-4 py-4 text-accent-foreground">
                             {children}
                         </div>
                     </div>

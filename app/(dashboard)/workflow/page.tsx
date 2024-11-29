@@ -290,7 +290,7 @@ function UserWorkflows() {
   };
 
   return (
-    <>
+    <div className="max-w-6xl container mx-auto mt-14">
       {isLoading && (
         <motion.div
           className="space-y-4"
@@ -504,7 +504,7 @@ function UserWorkflows() {
           )}
         </DialogContent>
       </Dialog>
-    </>
+    </div>
   );
 }
 

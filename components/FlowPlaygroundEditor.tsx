@@ -1,7 +1,7 @@
 "use client";
 
 import { Workflow } from "@prisma/client";
-import {ReactFlow, useEdgesState, useNodesState } from "@xyflow/react";
+import {Background, BackgroundVariant, Controls, ReactFlow, useEdgesState, useNodesState } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 
 function FlowPlaygroundEditor({ workflow }: { workflow: Workflow }) {
@@ -15,7 +15,10 @@ function FlowPlaygroundEditor({ workflow }: { workflow: Workflow }) {
         edges={edges}
         onEdgesChange={onEdgesChange}
         onNodesChange={onNodesChange}
-      />
+      >
+        <Controls position="bottom-left"/>
+        <Background variant={BackgroundVariant.Dots} gap={12} size={1}/>
+      </ReactFlow>
     </main>
   );
 }
