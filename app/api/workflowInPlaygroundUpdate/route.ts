@@ -1,34 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { createWorkFlowForm } from "@/schema/workflowForm"; 
 import { z } from "zod";
 
-export async function PUT(req: NextRequest) {
+const workflowUpdateSchema = z.object({
+  id: z.string(),
+  definition: z.string(),
+  name: z.string().optional(),
+  description: z.string().optional(),
+  status: z.string().optional(),
+});
+
+export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-
-    const parsedBody = createWorkFlowForm.parse({
-      name: body.name,
-      description: body.description,
-    });
-
-    const { id, userId, definition, status } = body;
-
-    if (!id || !userId || !definition) {
-      return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 }
-      );
-    }
+    const validatedData = workflowUpdateSchema.parse(body);
+    const { id, definition, name, description, status } = validatedData;
 
     const updatedWorkflow = await prisma.workflow.update({
       where: { id },
       data: {
-        userId,
-        name: parsedBody.name,
-        description: parsedBody.description,
         definition,
-        status: status,
+        name,
+        description,
+        status,
       },
     });
 
@@ -36,7 +30,7 @@ export async function PUT(req: NextRequest) {
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: error.errors.map((e) => e.message) },
+        { error: error.errors.map((err) => err.message) },
         { status: 400 }
       );
     }

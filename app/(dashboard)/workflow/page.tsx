@@ -42,6 +42,7 @@ import EditWorkflowForm from "@/components/EditWorkflowForm";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Clock, Info } from 'lucide-react'
 import { useRouter } from 'next/navigation';
+import Navbar from "@/components/Navbar";
 
 interface Workflow {
   id: string;
@@ -290,7 +291,10 @@ function UserWorkflows() {
   };
 
   return (
-    <div className="max-w-6xl container mx-auto mt-14">
+    <>
+    <Navbar/>
+    <div className="max-w-6xl p-4 py-4 container mx-auto mt-14">
+      
       {isLoading && (
         <motion.div
           className="space-y-4"
@@ -505,6 +509,7 @@ function UserWorkflows() {
         </DialogContent>
       </Dialog>
     </div>
+    </>
   );
 }
 

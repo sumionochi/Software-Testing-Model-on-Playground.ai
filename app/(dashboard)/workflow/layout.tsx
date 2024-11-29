@@ -11,10 +11,9 @@ function layout({ children }: { children: React.ReactNode }) {
         <IsAuthorised>
             <div className="flex h-screen w-full">
                 <div className="flex flex-col flex-1 w-full">
-                    <Navbar/>
                     <Separator />
                     <div className="overflow-auto">
-                        <div className="flex-1 p-4 py-4 text-accent-foreground">
+                        <div className="flex-1 text-accent-foreground">
                             {children}
                         </div>
                     </div>
