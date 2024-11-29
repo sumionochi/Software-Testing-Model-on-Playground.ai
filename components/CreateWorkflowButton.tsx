@@ -12,6 +12,10 @@ import { Input } from "./ui/input";
 import { useProfile } from "@/hooks/profileProvider";
 import { toast } from 'sonner';
 import { useRouter } from "next/navigation";
+import { CreateNode } from "@/lib/workflow/createNode";
+import { PlaygroundTaskType } from "@/schema/playgroundTask";
+import { Edge } from "@xyflow/react";
+import { PlaygroundNode } from "@/schema/playgroundNode";
 
 interface Workflow {
   id: string;
@@ -41,6 +45,13 @@ function CreateWorkflowButton({ triggerText, onWorkflowCreated }: CreateWorkflow
     },
   });
 
+  const initialFlow: { nodes: PlaygroundNode[]; edges: Edge[] } = {
+    nodes: [],
+    edges: [],
+  };
+  
+  initialFlow.nodes.push(CreateNode(PlaygroundTaskType.LAUNCH_BROWSER));  
+
   const onSubmit = async (data: CreateWorkFlowFormType) => {
     try {
       const response = await fetch("/api/workflowUpload", {
@@ -51,7 +62,7 @@ function CreateWorkflowButton({ triggerText, onWorkflowCreated }: CreateWorkflow
         body: JSON.stringify({
           ...data,
           userId: profile.id, 
-          definition: "Todo", 
+          definition: JSON.stringify(initialFlow), 
           status: "Draft"
         }),
       });

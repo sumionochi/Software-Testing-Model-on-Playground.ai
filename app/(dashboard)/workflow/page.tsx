@@ -276,20 +276,31 @@ function UserWorkflows() {
   };
 
   const router = useRouter();
-  const [isHovered, setIsHovered] = useState(false);
+  const [hoveredWorkflowId, setHoveredWorkflowId] = useState<string | null>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const cardRef = useRef<HTMLDivElement>(null);
   
-  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (cardRef.current) {
-      const rect = cardRef.current.getBoundingClientRect();
-      setMousePosition({
-        x: event.clientX - rect.left,
-        y: event.clientY - rect.top,
-      });
-    }
+  const handleMouseEnter = (workflowId: string, event: React.MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    setMousePosition({
+      x: event.clientX - rect.left,
+      y: event.clientY - rect.top,
+    });
+    setHoveredWorkflowId(workflowId);
+  };
+  
+  const handleMouseLeave = () => {
+    setHoveredWorkflowId(null);
   };
 
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    setMousePosition({
+      x: event.clientX - rect.left,
+      y: event.clientY - rect.top,
+    });
+  };
+  
   return (
     <>
     <Navbar/>
@@ -374,11 +385,6 @@ function UserWorkflows() {
           animate="visible"
           exit="exit"
         >
-          <CreateWorkflowButton
-            triggerText="Create New Workflow"
-            onWorkflowCreated={handleWorkflowCreated}
-          />
-          <p className="text-sm text-right">Note : Click on the Workflow Card to Launch the Playground</p>
           {workflows.map((workflow) => (
             <TooltipProvider key={workflow.id}>
               <motion.div
@@ -389,68 +395,69 @@ function UserWorkflows() {
                 exit="exit"
                 className="cursor-pointer"
               >
-                <Card className="overflow-hidden hover:shadow-md transition-shadow">
+                <Card
+                  className="overflow-hidden hover:shadow-md transition-shadow"
+                  onMouseEnter={(event) => handleMouseEnter(workflow.id, event)}
+                  onMouseLeave={handleMouseLeave}
+                >
                   <CardHeader className="p-4">
-                    <div className="flex justify-between items-start">
-                      <div
-                        ref={cardRef}
-                        className="relative flex flex-col gap-2 p-4 w-full rounded-lg transition-shadow duration-200 ease-in-out cursor-pointer"
-                        onMouseEnter={() => setIsHovered(true)}
-                        onMouseLeave={() => setIsHovered(false)}
-                        onMouseMove={handleMouseMove}
-                        onClick={() => router.push(`/workflow/editor/${workflow.id}`)}
-                      >
-                        {/* Left Section */}
-                        <div>
-                          <Tooltip>
-                            <TooltipTrigger>
-                              <Badge className="flex text-[12px] items-center p-1 py-0">
-                                <Clock className="w-3 h-3 mr-1" />
-                                <span>{format(new Date(workflow.updatedAt), "PP")}</span>
-                              </Badge>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>Last updated</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </div>
-                        <CardTitle className="text-lg font-medium">
-                          {workflow.name}
-                          <p className="hidden md:inline opacity-70">: {workflow.description}</p>
-                        </CardTitle>
-                        
-                        {isHovered && (
+                    <div
+                      className="relative flex flex-col gap-2 p-4 w-full rounded-lg transition-shadow duration-200 ease-in-out cursor-pointer"
+                      onClick={() => router.push(`/workflow/editor/${workflow.id}`)}
+                      onMouseEnter={(event) => handleMouseEnter(workflow.id, event)}
+                      onMouseLeave={handleMouseLeave}
+                      onMouseMove={(event) => handleMouseMove(event)}
+                    >
+                      <div>
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <Badge className="flex text-[12px] items-center p-1 py-0">
+                              <Clock className="w-3 h-3 mr-1" />
+                              <span>
+                                {format(new Date(workflow.updatedAt), "PP")}
+                              </span>
+                            </Badge>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Last updated</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </div>
+                      <CardTitle className="text-lg font-medium">
+                        {workflow.name}
+                        <p className="hidden md:inline opacity-70">
+                          : {workflow.description}
+                        </p>
+                      </CardTitle>
+
+                      {hoveredWorkflowId === workflow.id && (
                           <div
                             className="absolute bg-primary text-primary-foreground px-3 py-1 rounded-md text-sm font-medium shadow-sm"
                             style={{
                               left: `${mousePosition.x}px`,
                               top: `${mousePosition.y}px`,
-                              transform: 'translate(-50%, -100%)',
+                              transform: "translate(-50%, -100%)",
                               zIndex: 10,
-                              transition: 'opacity 0.2s',
-                              opacity: 1,
-                              pointerEvents: 'none',
+                              pointerEvents: "none",
                             }}
                           >
                             Launch Playground
                           </div>
                         )}
-                      </div>
+                    </div>
 
-                      {/* Right Section: Badge and Options */}
-                      <div className="flex items-center space-x-2">
-                        <Badge
-                          variant={statusMap[workflow.status]?.variant || "default"}
-                          className="text-xs"
-                        >
-                          {statusMap[workflow.status]?.label || workflow.status}
-                        </Badge>
-                        <WorkflowOptions
-                          onEdit={openEditDialog}
-                          onDelete={onDelete}
-                          workflow={workflow}
-                        />
-                      </div>
+                    <div className="flex items-center space-x-2">
+                      <Badge
+                        variant={statusMap[workflow.status]?.variant || "default"}
+                        className="text-xs"
+                      >
+                        {statusMap[workflow.status]?.label || workflow.status}
+                      </Badge>
+                      <WorkflowOptions
+                        onEdit={openEditDialog}
+                        onDelete={onDelete}
+                        workflow={workflow}
+                      />
                     </div>
                   </CardHeader>
                 </Card>
