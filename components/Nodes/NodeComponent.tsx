@@ -5,6 +5,7 @@ import NodeHeader from "./NodeHeader";
 import { PlaygroundNodeData } from "@/schema/playgroundNode";
 import { TaskRegistry } from "@/lib/workflow/task/registry";
 import { NodeInput, NodeInputs } from "./NodeInputs";
+import { NodeOutput, NodeOutputs } from "./NodeOutputs";
 
 const NodeComponent = memo((props: NodeProps) => {
   const nodeData = props.data as PlaygroundNodeData;
@@ -17,6 +18,11 @@ const NodeComponent = memo((props: NodeProps) => {
           <NodeInput key={input.name} input={input} nodeId={props.id}/>
         ))}
       </NodeInputs>
+      <NodeOutputs>
+        {task.outputs.map((output) => (
+          <NodeOutput key={output.name} output={output} nodeId={props.id} />
+        ))}
+      </NodeOutputs>
     </NodeCard>
   );
 });
