@@ -32,6 +32,10 @@ function FlowPlaygroundEditor({ workflow }: { workflow: Workflow }) {
         snapGrid={snapGrid}
         fitView
         fitViewOptions={fitViewOptions}
+        panOnScroll={true}  
+        panOnDrag={true}    
+        minZoom={0.5}  
+        maxZoom={2} 
       >
         <Controls position="bottom-left" fitViewOptions={fitViewOptions}/>
         <Background variant={BackgroundVariant.Dots} gap={12} size={1}/>
