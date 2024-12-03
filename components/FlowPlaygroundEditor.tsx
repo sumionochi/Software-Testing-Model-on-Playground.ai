@@ -3,12 +3,13 @@
 import { CreateNode } from "@/lib/workflow/createNode";
 import { PlaygroundTaskType } from "@/schema/playgroundTask";
 import { Workflow } from "@prisma/client";
-import {Background, BackgroundVariant, Connection, Controls, Edge, ReactFlow, addEdge, useEdgesState, useNodesState, useReactFlow } from "@xyflow/react";
+import {Background, BackgroundVariant, Connection, Controls, Edge, ReactFlow, addEdge, getOutgoers, useEdgesState, useNodesState, useReactFlow } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import NodeComponent from "./Nodes/NodeComponent";
 import { useCallback, useEffect } from "react";
 import { PlaygroundNode } from "@/schema/playgroundNode";
 import DeleteEdge from "./Edges/DeleteEdge";
+import { TaskRegistry } from "@/lib/workflow/task/registry";
 
 const nodeTypes = {
   Node: NodeComponent,
@@ -56,7 +57,7 @@ function FlowPlaygroundEditor({ workflow }: { workflow: Workflow }) {
     const newNode = CreateNode(taskType as PlaygroundTaskType, position);
     setNodes((nds) => nds.concat(newNode));
     
-  }, []);  
+  }, [screenToFlowPosition, setNodes]);  
 
   const onConnect = useCallback(
     (connection: Connection) => {
@@ -75,10 +76,56 @@ function FlowPlaygroundEditor({ workflow }: { workflow: Workflow }) {
         },
       });
     },
-    [setEdges, updateNodeData]
+    [setEdges, updateNodeData, nodes]
+  );
+
+  const isValidConnection = useCallback(
+    (connection: Edge | Connection) => {
+      const source = nodes.find((node) => node.id === connection.source);
+      const target = nodes.find((node) => node.id === connection.target);
+  
+      if (!source || !target) {
+        console.error("Invalid connection: source or target node not found");
+        return false;
+      }
+  
+      const sourceTask = TaskRegistry[source.data.type];
+      const targetTask = TaskRegistry[target.data.type];
+  
+      const output = sourceTask.outputs.find(
+        (o) => o.name === connection.sourceHandle
+      );
+  
+      const input = targetTask.inputs.find(
+        (o) => o.name === connection.targetHandle
+      );
+  
+      if (input?.type !== output?.type) {
+        console.error("Invalid connection: type mismatch");
+        return false;
+      }
+
+      const hasCycle = (node: PlaygroundNode, visited = new Set()) => {
+        if (visited.has(node.id)) return false;
+        visited.add(node.id);
+      
+        for (const outgoer of getOutgoers(node, nodes, edges)) {
+          if (outgoer.id === connection.source) return true;
+          if (hasCycle(outgoer, visited)) return true;
+        }
+      
+        return false;
+      };
+      
+      const detectedCycle = hasCycle(target);
+      return !detectedCycle;      
+    },
+    
+    [nodes]
   );
 
   
+
   return (
     <main className="h-full w-full">
       <ReactFlow
@@ -99,6 +146,7 @@ function FlowPlaygroundEditor({ workflow }: { workflow: Workflow }) {
         minZoom={0.5}
         maxZoom={2}
         onConnect={onConnect}
+        isValidConnection={isValidConnection}
       >
         <Controls position="bottom-left" fitViewOptions={fitViewOptions} />
         <Background variant={BackgroundVariant.Dots} gap={12} size={1} />

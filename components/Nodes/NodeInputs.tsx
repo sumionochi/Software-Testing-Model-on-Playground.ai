@@ -22,6 +22,7 @@ export function NodeInput({ input, nodeId }: { input: TaskParam; nodeId: string 
         <Handle
           id={input.name}
           type="target"
+          isConnectable={!isConnected}
           position={Position.Left}
           className={cn(
             "bg-muted-foreground !border-2 !border-background !-left-2 !w-4 !h-4",
