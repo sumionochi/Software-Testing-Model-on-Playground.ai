@@ -8,7 +8,7 @@ import { PlaygroundNode } from "@/schema/playgroundNode";
 import { useCallback } from "react";
 import BrowserField from "./params/BrowserField";
 
-function NodeField({ param, nodeId }: { param: TaskParam, nodeId: string }) {
+function NodeField({ param, nodeId, disabled }: { param: TaskParam, nodeId: string, disabled: boolean }) {
     const { updateNodeData, getNode } = useReactFlow();
     const node = getNode(nodeId) as PlaygroundNode;
     const value = node?.data.inputs?.[param.name];
@@ -32,12 +32,14 @@ function NodeField({ param, nodeId }: { param: TaskParam, nodeId: string }) {
               param={param}
               value={value}
               updateNodeParamValue={updateNodeParamValue}
+              disabled={disabled}
             />
           );
         case TaskParamType.BROWSER_INSTANCE:
           return (
             <BrowserField
               param={param}
+              
               value={""}
               updateNodeParamValue={updateNodeParamValue}
             />
