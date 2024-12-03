@@ -4,7 +4,7 @@ import { CodeIcon, GlobeIcon, LucideProps } from "lucide-react";
 
 export const PageToHtmlTask = {
   type: PlaygroundTaskType.PAGE_TO_HTML,
-  label: "Get html from page",
+  label: "Extract HTML",
   icon: (props: LucideProps) => (
     <CodeIcon className="stroke-rose-400" {...props} />
   ),

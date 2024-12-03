@@ -2,11 +2,16 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ParamProps, TaskParam } from "@/schema/playgroundTask";
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 
 function StringField({ param, value, updateNodeParamValue }: ParamProps) {
-    const [internalValue, setInternalValue] = useState(value);
-    const id = useId();
+  const [internalValue, setInternalValue] = useState(value);
+  const id = useId();
+  
+  useEffect(() => {
+    setInternalValue(value);
+  }, [value]);
+  
     return (
       <div className="space-y-1 p-1 w-full">
         <Label htmlFor={id} className="text-xs flex">
