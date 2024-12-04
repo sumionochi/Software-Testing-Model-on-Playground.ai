@@ -2,20 +2,15 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeftIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { TooltipProvider } from "../ui/tooltip";
 import { SidebarTrigger } from "../ui/sidebar";
-import SavePlaygroundProgress from "./SavePlaygroundProgress";
-import SaveBtn from "./SavePlaygroundProgress";
 
 interface Props {
   title: string;
   subtitle?: string | null;
   workflowId: string;
-  workflowDefinition: any;
-  toObject: () => any;
 }
 
-export default function Topbar({ title, subtitle, workflowId, workflowDefinition, toObject }: Props) {
+export default function Topbar({ title, subtitle }: Props) {
   const router = useRouter();
   return (
     <header className="flex items-center p-2 shadow-md justify-between w-full h-[60px] sticky top-0 bg-background z-10">
