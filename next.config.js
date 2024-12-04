@@ -61,6 +61,15 @@ const nextConfig = {
         },
       ],
     },
+    async redirects() {
+      return [
+        {
+          source: '/',
+          destination: '/workflow',
+          permanent: false,
+        },
+      ];
+    },
 };
   
 module.exports = nextConfig;

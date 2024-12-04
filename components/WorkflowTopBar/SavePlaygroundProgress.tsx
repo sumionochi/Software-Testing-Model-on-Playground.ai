@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useReactFlow } from "@xyflow/react";
 import { CheckIcon, SaveIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
@@ -10,10 +9,11 @@ import { toast } from "sonner";
 
 interface Props {
   workflowId: string;
+  workflowDefinition: any;
+  toObject: () => any;
 }
 
-export default function SaveBtn({ workflowId }: Props) {
-  const { toObject } = useReactFlow();
+export default function SaveBtn({ workflowId, workflowDefinition, toObject }: Props) {
   const [isSaved, setIsSaved] = useState(false);
 
   const saveMutation = useMutation({
@@ -28,7 +28,7 @@ export default function SaveBtn({ workflowId }: Props) {
     onSuccess: () => {
       toast.success("Flow saved successfully!", { id: "save-workflow" });
       setIsSaved(true);
-      setTimeout(() => setIsSaved(false), 2000); 
+      setTimeout(() => setIsSaved(false), 2000);
     },
     onError: () => {
       toast.error("Something went wrong", { id: "save-workflow" });
@@ -36,11 +36,22 @@ export default function SaveBtn({ workflowId }: Props) {
   });
 
   const handleSave = () => {
-    const workflowDefinition = JSON.stringify(toObject());
+    const flow = toObject();
+
+    // Update workflowDefinition with current nodes, edges, and viewport
+    const updatedWorkflowDefinition = {
+      ...workflowDefinition,
+      nodes: flow.nodes,
+      edges: flow.edges,
+      viewport: flow.viewport,
+      // Ensure executionHistory is included
+      executionHistory: workflowDefinition.executionHistory || [],
+    };
+
     toast.loading("Saving workflow...", { id: "save-workflow" });
     saveMutation.mutate({
       id: workflowId,
-      definition: workflowDefinition,
+      definition: JSON.stringify(updatedWorkflowDefinition),
     });
   };
 

@@ -139,7 +139,8 @@ static async createWriter(): Promise<AIWriter | null> {
 
 static async writeText(writer: AIWriter, combinedInput: string): Promise<string> {
   try {
-    const result = await writer.write("A draft for an inquiry to my bank about how to enable wire transfers on my account.");
+    console.log(combinedInput, "hehe");
+    const result = await writer.write(combinedInput);
     console.log("AIService.writeText(): Generated text =", result);
     return result;
   } catch (error) {

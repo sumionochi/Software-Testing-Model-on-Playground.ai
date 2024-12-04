@@ -56,6 +56,7 @@ export const WriterTask: TaskDefinition = {
     }
 
     try {
+      console.log(combinedInput, "hehe");
       const generatedText = await AIService.writeText(writer, combinedInput);
       console.log("WriterTask: Generated text:", generatedText);
       return { "Generated Text": generatedText };

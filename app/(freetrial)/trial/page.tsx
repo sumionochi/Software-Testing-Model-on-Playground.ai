@@ -1,5 +1,4 @@
 import FlowPlaygroundEditor from '@/components/FlowPlaygroundEditor';
-import FlowPlaygroundEditorTrial from '@/components/FlowPlaygroundEditorTrial';
 import PlaygroundEditorTrial from '@/components/PlaygroundEditorTrial';
 import React from 'react';
 

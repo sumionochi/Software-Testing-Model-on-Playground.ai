@@ -20,11 +20,6 @@ import { Separator } from './ui/separator'
 
 const items = [
   {
-    title: "Home",
-    url: "/",
-    icon: Home,
-  },
-  {
     title: "Workflows",
     url: "/workflow",
     icon: ArrowUpDown,
