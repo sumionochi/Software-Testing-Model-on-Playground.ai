@@ -19,7 +19,7 @@ export const WriterTask: TaskDefinition = {
   type: PlaygroundTaskType.WRITER,
   label: "Writer",
   icon: (props: LucideProps) => (
-    <PencilIcon className="stroke-blue-400" {...props} />
+    <PencilIcon className="stroke-amber-600" {...props} />
   ),
   isEntryPoint: false,
   inputs: [

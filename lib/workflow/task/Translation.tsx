@@ -1,14 +1,14 @@
 // Translation.tsx
 
 import { PlaygroundTaskType, TaskParamType, TaskDefinition } from "@/schema/playgroundTask";
-import { GlobeIcon, LucideProps } from "lucide-react";
+import { GlobeIcon, Languages, LucideProps } from "lucide-react";
 import { AIService } from "@/lib/aiService";
 
 export const TranslationTask: TaskDefinition = {
   type: PlaygroundTaskType.TRANSLATION,
   label: "Translation",
   icon: (props: LucideProps) => (
-    <GlobeIcon className="stroke-yellow-400" {...props} />
+    <Languages className="stroke-rose-400" {...props} />
   ),
   isEntryPoint: false,
   inputs: [
@@ -22,13 +22,36 @@ export const TranslationTask: TaskDefinition = {
       name: "Source Language",
       type: TaskParamType.STRING,
       required: true,
-      helperText: "e.g., en, es, fr",
+      options: [
+        "af", "am", "ar", "ar-Latn", "az", "be", "bg", "bg-Latn", "bn", "bs", "ca", "ceb", "co", "cs", "cy",
+        "da", "de", "el", "el-Latn", "en", "eo", "es", "et", "eu", "fa", "fi", "fil", "fr", "fy", "ga", "gd",
+        "gl", "gu", "ha", "haw", "hi", "hi-Latn", "hmn", "hr", "ht", "hu", "hy", "id", "ig", "is", "it", "iw",
+        "ja", "ja-Latn", "jv", "ka", "kk", "km", "kn", "ko", "ku", "ky", "la", "lb", "lo", "lt", "lv", "mg",
+        "mi", "mk", "ml", "mn", "mr", "ms", "mt", "my", "ne", "nl", "no", "ny", "pa", "pl", "ps", "pt", "ro",
+        "ru", "ru-Latn", "sd", "si", "sk", "sl", "sm", "sn", "so", "sq", "sr", "st", "su", "sv", "sw", "ta",
+        "te", "tg", "th", "tr", "uk", "ur", "uz", "vi", "xh", "yi", "yo", "zh", "zh-Latn", "zu"
+      ],
+      defaultValue: "en",
+      connectable: false,
+      variant: "select",
+
     },
     {
       name: "Target Language",
       type: TaskParamType.STRING,
       required: true,
-      helperText: "e.g., en, es, fr",
+      options: [
+        "af", "am", "ar", "ar-Latn", "az", "be", "bg", "bg-Latn", "bn", "bs", "ca", "ceb", "co", "cs", "cy",
+        "da", "de", "el", "el-Latn", "en", "eo", "es", "et", "eu", "fa", "fi", "fil", "fr", "fy", "ga", "gd",
+        "gl", "gu", "ha", "haw", "hi", "hi-Latn", "hmn", "hr", "ht", "hu", "hy", "id", "ig", "is", "it", "iw",
+        "ja", "ja-Latn", "jv", "ka", "kk", "km", "kn", "ko", "ku", "ky", "la", "lb", "lo", "lt", "lv", "mg",
+        "mi", "mk", "ml", "mn", "mr", "ms", "mt", "my", "ne", "nl", "no", "ny", "pa", "pl", "ps", "pt", "ro",
+        "ru", "ru-Latn", "sd", "si", "sk", "sl", "sm", "sn", "so", "sq", "sr", "st", "su", "sv", "sw", "ta",
+        "te", "tg", "th", "tr", "uk", "ur", "uz", "vi", "xh", "yi", "yo", "zh", "zh-Latn", "zu"
+      ],
+      defaultValue: "ja",
+      connectable: false,
+      variant: "select",
     },
   ],
   outputs: [

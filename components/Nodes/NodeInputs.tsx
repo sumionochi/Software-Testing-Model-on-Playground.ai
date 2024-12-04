@@ -15,10 +15,12 @@ export function NodeInput({ input, nodeId }: { input: TaskParam; nodeId: string 
     (edge) => edge.target === nodeId && edge.targetHandle === input.name
   );
 
+  const shouldRenderHandle = input.connectable !== false && !input.hideHandle;
+
   return (
     <div className="flex justify-start relative p-3 bg-secondary w-full">
       <NodeField param={input} nodeId={nodeId} disabled={isConnected} />
-      {!input.hideHandle && (
+      {shouldRenderHandle && !input.hideHandle && (
         <Handle
           id={input.name}
           type="target"

@@ -1,14 +1,14 @@
 // PromptTask.tsx
 
 import { PlaygroundTaskType, TaskParamType, TaskDefinition } from "@/schema/playgroundTask";
-import { CodeIcon, LucideProps } from "lucide-react";
+import { BookA, CodeIcon, LucideProps } from "lucide-react";
 import { AIService } from "@/lib/aiService";
 
 export const PromptTask: TaskDefinition = {
   type: PlaygroundTaskType.PROMPT,
   label: "Prompt",
   icon: (props: LucideProps) => (
-    <CodeIcon className="stroke-blue-400" {...props} />
+    <BookA className="stroke-violet-400" {...props} />
   ),
   isEntryPoint: false,
   inputs: [

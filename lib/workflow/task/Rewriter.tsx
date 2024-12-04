@@ -16,7 +16,7 @@ export const RewriterTask: TaskDefinition = {
   type: PlaygroundTaskType.REWRITER,
   label: "Rewriter",
   icon: (props: LucideProps) => (
-    <RepeatIcon className="stroke-green-400" {...props} />
+    <RepeatIcon className="stroke-orange-400" {...props} />
   ),
   isEntryPoint: false,
   inputs: [
