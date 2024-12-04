@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import SignInWithGoogleButton from "./SignInWithGoogleButton"
+import { FlaskConical } from "lucide-react"
 
 export function LoginForm() {
   return (
@@ -46,7 +47,7 @@ export function LoginForm() {
               </Button> */}
               <Link href={'/trial'}>
               <Button className="w-full">
-                Try for free
+                <FlaskConical/> Try for free
               </Button>
               </Link>
              <SignInWithGoogleButton/> 

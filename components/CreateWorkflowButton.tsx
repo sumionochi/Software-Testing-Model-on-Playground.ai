@@ -50,7 +50,7 @@ function CreateWorkflowButton({ triggerText, onWorkflowCreated }: CreateWorkflow
     edges: [],
   };
   
-  initialFlow.nodes.push(CreateNode(PlaygroundTaskType.LAUNCH_BROWSER));  
+  initialFlow.nodes.push(CreateNode(PlaygroundTaskType.PROMPT));  
 
   const onSubmit = async (data: CreateWorkFlowFormType) => {
     try {

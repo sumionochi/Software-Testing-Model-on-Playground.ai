@@ -7,6 +7,8 @@ import {
 } from "./ui/accordion";
 import { PlaygroundTaskType } from "@/schema/playgroundTask";
 import { Button } from "./ui/button";
+import { Label } from "./ui/label";
+import { MapPinCheckInside } from "lucide-react";
 
 export default function TaskMenu() {
   return (
