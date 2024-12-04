@@ -10,7 +10,7 @@ import {
 import { Button } from "../ui/button";
 
 export default function DeleteEdge(props: EdgeProps) {
-  console.log('DeleteEdge component rendered with props:', props); // For debugging
+  // console.log('DeleteEdge component rendered with props:', props); // For debugging
   const [edgePath, labelX, labelY] = getSmoothStepPath(props);
   const { setEdges } = useReactFlow();
 
@@ -34,13 +34,13 @@ export default function DeleteEdge(props: EdgeProps) {
             size="icon"
             className="w-5 h-5 border cursor-pointer rounded-full text-xs leading-none hover:shadow-lg"
             onClick={() => {
-              console.log("Deleting edge with ID:", props.id);
+              // console.log("Deleting edge with ID:", props.id);
               setEdges((edges) => {
-                console.log("Current edges before delete:", edges);
+                // console.log("Current edges before delete:", edges);
                 const updatedEdges = edges.filter(
                   (edge) => edge.id !== props.id
                 );
-                console.log("Updated edges after delete:", updatedEdges);
+                // console.log("Updated edges after delete:", updatedEdges);
                 return updatedEdges;
               });
             }}

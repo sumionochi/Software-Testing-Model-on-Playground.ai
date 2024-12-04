@@ -11,7 +11,7 @@ const Playground = ({ params }: { params: { workflowId: string } }) => {
   const supabase = createClient(); 
 
   const { workflowId } = params;
-  console.log("workflowId:", workflowId);
+  // console.log("workflowId:", workflowId);
 
   const [workflow, setWorkflow] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);

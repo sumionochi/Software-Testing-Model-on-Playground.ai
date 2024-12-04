@@ -59,6 +59,13 @@ function NodeHeader({ taskType, nodeId }: { taskType: PlaygroundTaskType , nodeI
               <CopyIcon size={12} />
             </Button> </>           
             )}
+            <Button
+              variant={"ghost"}
+              size={"icon"}
+              className="drag-handle cursor-grab"
+            >
+              <GripVerticalIcon size={20} />
+            </Button>
           </div>
         </div>
       </div>
