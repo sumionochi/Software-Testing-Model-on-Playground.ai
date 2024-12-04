@@ -34,6 +34,7 @@ export const WriterTask: TaskDefinition = {
       type: TaskParamType.STRING,
       required: false,
       variant: "textarea",
+      connectable: false
     },
   ],
   outputs: [

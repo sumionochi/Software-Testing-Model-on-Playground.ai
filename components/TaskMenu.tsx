@@ -13,14 +13,14 @@ export default function TaskMenu() {
     <aside className="w-[340px] min-w-[340px] max-w-[340px] border-r-2 border-separate h-full p-2 px-4 overflow-auto">
       <Accordion type="multiple" className="w-full" defaultValue={["extraction", "ai", "translation"]}>
         {/* Source Data Category */}
-        <AccordionItem value="extraction">
+        {/* <AccordionItem value="extraction">
           <AccordionTrigger className="font-bold">Source Data</AccordionTrigger>
           <AccordionContent className="flex flex-col gap-2">
             <TaskMenuBtn taskType={PlaygroundTaskType.LAUNCH_BROWSER} />
             <TaskMenuBtn taskType={PlaygroundTaskType.PAGE_TO_HTML} />
             <TaskMenuBtn taskType={PlaygroundTaskType.EXTRACT_TEXT_FROM_ELEMENT} />
           </AccordionContent>
-        </AccordionItem>
+        </AccordionItem> */}
 
         {/* AI Tasks Category */}
         <AccordionItem value="ai">

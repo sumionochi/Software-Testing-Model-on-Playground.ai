@@ -29,16 +29,6 @@ const items = [
     url: "/workflow",
     icon: ArrowUpDown,
   },
-  {
-    title: "Credentials",
-    url: "/credentials", 
-    icon: Key,
-  },
-  {
-    title: "Billing",
-    url: "/billing",
-    icon: Receipt,
-  },
 ]
 
 export function AppSidebar() {

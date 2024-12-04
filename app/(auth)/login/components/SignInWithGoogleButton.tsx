@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { signInWithGoogle } from "@/lib/auth-actions";
+import { Save } from "lucide-react";
 import React from "react";
 
 const SignInWithGoogleButton = () => {
@@ -13,7 +14,8 @@ const SignInWithGoogleButton = () => {
         signInWithGoogle();
       }}
     >
-      Login with Google
+      <Save/>
+      Login with Google to save progress
     </Button>
   );
 };

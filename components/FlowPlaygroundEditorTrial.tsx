@@ -1,5 +1,3 @@
-// FlowPlaygroundEditor.tsx
-
 "use client";
 
 import { CreateNode } from "@/lib/workflow/createNode";
@@ -12,6 +10,7 @@ import {
     Controls,
     Edge,
     ReactFlow,
+    ReactFlowProvider,
     addEdge,
     getOutgoers,
     useEdgesState,
@@ -26,8 +25,22 @@ import DeleteEdge from "./Edges/DeleteEdge";
 import { TaskRegistry } from "@/lib/workflow/task/registry";
 import { toast } from 'sonner'; // Importing 'sonner'
 import { Button } from "./ui/button";
-import { Divide, GitCompareArrows, Loader } from "lucide-react";
-import SignInWithGoogleButton from "@/app/(auth)/login/components/SignInWithGoogleButton";
+
+// Default trial workflow
+const trialWorkflow: Workflow = {
+    id: 'trial-id',
+    name: 'Trial Workflow',
+    userId: 'trial-user',
+    description: 'This is a trial workflow.',
+    definition: JSON.stringify({
+        nodes: [],
+        edges: [],
+        viewport: { x: 0, y: 0, zoom: 1 },
+    }),
+    status: 'trial',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+};
 
 const nodeTypes = {
     Node: NodeComponent,
@@ -40,7 +53,10 @@ const edgeTypes = {
 const snapGrid: [number, number] = [50, 50];
 const fitViewOptions = { padding: 1 };
 
-function FlowPlaygroundEditor({ workflow }: { workflow: Workflow }) {
+function FlowPlaygroundEditorTrial({ workflow }: { workflow?: Workflow }) {
+    // Use trialWorkflow if no workflow is provided
+    const currentWorkflow = workflow || trialWorkflow;
+
     const [nodes, setNodes, onNodesChange] = useNodesState<PlaygroundNode>([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
     const { setViewport, screenToFlowPosition, updateNodeData } = useReactFlow();
@@ -48,7 +64,7 @@ function FlowPlaygroundEditor({ workflow }: { workflow: Workflow }) {
 
     useEffect(() => {
         try {
-            const flow = JSON.parse(workflow.definition);
+            const flow = JSON.parse(currentWorkflow.definition);
             if (!flow) return;
             setNodes(flow.nodes || []);
             setEdges(flow.edges || []);
@@ -59,7 +75,7 @@ function FlowPlaygroundEditor({ workflow }: { workflow: Workflow }) {
             console.error("Failed to parse workflow definition:", error);
             toast.error("Failed to load workflow. Please check the console for details.");
         }
-    }, [workflow.definition, setEdges, setNodes, setViewport]);
+    }, [currentWorkflow, setEdges, setNodes, setViewport]);
 
     const onDragOver = useCallback((event: React.DragEvent) => {
         event.preventDefault();
@@ -158,7 +174,7 @@ function FlowPlaygroundEditor({ workflow }: { workflow: Workflow }) {
           return true;
         },
         [nodes, edges]
-      );
+    );
 
     // Function to perform topological sort
     const topologicalSort = (nodes: PlaygroundNode[], edges: Edge[]) => {
@@ -203,15 +219,13 @@ function FlowPlaygroundEditor({ workflow }: { workflow: Workflow }) {
     const executeWorkflow = useCallback(async () => {
         setIsExecuting(true);
         try {
-            // Topological sort to determine execution order
             const sortedNodes = topologicalSort(nodes, edges);
             const nodeResults: Record<string, any> = {};
 
             for (const node of sortedNodes) {
                 const task: TaskDefinition = TaskRegistry[node.data.type];
-                if (!task.execute) continue; // Skip tasks without execute function
+                if (!task.execute) continue;
 
-                // Gather inputs from node's inputs or previous node outputs
                 const inputs: Record<string, any> = {};
                 for (const inputName in node.data.inputs) {
                     const connectedEdge = edges.find(
@@ -223,9 +237,6 @@ function FlowPlaygroundEditor({ workflow }: { workflow: Workflow }) {
                             throw new Error(`Source node with ID "${connectedEdge.source}" not found.`);
                         }
                         const sourceTask: TaskDefinition = TaskRegistry[sourceNode.data.type];
-                        if (!sourceTask) {
-                            throw new Error(`Source task type "${sourceNode.data.type}" not found.`);
-                        }
                         const outputKey = `${connectedEdge.source}_${connectedEdge.sourceHandle}`;
                         inputs[inputName] = nodeResults[outputKey];
                     } else {
@@ -252,50 +263,44 @@ function FlowPlaygroundEditor({ workflow }: { workflow: Workflow }) {
         } finally {
             setIsExecuting(false);
         }
-    }, [nodes, edges, TaskRegistry]);
+    }, [nodes, edges]);
 
     return (
-        <main className="h-full w-full">
-            <div className="flex flex-row items-center">
-            <Button
-                onClick={executeWorkflow}
-                className={`p-2 m-4 rounded ${isExecuting ? 'opacity-50 cursor-not-allowed' : ''}`}
-                disabled={isExecuting}
-            >
-                <GitCompareArrows/>
-                {isExecuting ? (<>
-                    Executing <Loader className="animate-spin"/>
-                </>) : "Execute Workflow"}
-            </Button>
-            <div>
-                <SignInWithGoogleButton/>
-            </div>
-            </div>
-            <ReactFlow
-                nodes={nodes}
-                edges={edges}
-                onEdgesChange={onEdgesChange}
-                onNodesChange={onNodesChange}
-                nodeTypes={nodeTypes}
-                edgeTypes={edgeTypes}
-                snapToGrid={true}
-                snapGrid={snapGrid}
-                fitView
-                fitViewOptions={fitViewOptions}
-                onDragOver={onDragOver}
-                onDrop={onDrop}
-                panOnScroll={true}
-                panOnDrag={true}
-                minZoom={0.5}
-                maxZoom={2}
-                onConnect={onConnect}
-                isValidConnection={isValidConnection}
-            >
-                <Controls position="top-left" className="" fitViewOptions={fitViewOptions} />
-                <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
-            </ReactFlow>
-        </main>
+        <ReactFlowProvider>
+            <main className="h-full w-full">
+                <Button
+                    onClick={executeWorkflow}
+                    className={`p-2 m-4 rounded ${isExecuting ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    disabled={isExecuting}
+                >
+                    {isExecuting ? "Executing..." : "Execute Workflow"}
+                </Button>
+                <ReactFlow
+                    nodes={nodes}
+                    edges={edges}
+                    onEdgesChange={onEdgesChange}
+                    onNodesChange={onNodesChange}
+                    nodeTypes={nodeTypes}
+                    edgeTypes={edgeTypes}
+                    snapToGrid={true}
+                    snapGrid={snapGrid}
+                    fitView
+                    fitViewOptions={fitViewOptions}
+                    onDragOver={onDragOver}
+                    onDrop={onDrop}
+                    panOnScroll={true}
+                    panOnDrag={true}
+                    minZoom={0.5}
+                    maxZoom={2}
+                    onConnect={onConnect}
+                    isValidConnection={isValidConnection}
+                >
+                    <Controls position="bottom-left" className="" fitViewOptions={fitViewOptions} />
+                    <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
+                </ReactFlow>
+            </main>
+        </ReactFlowProvider>
     );
 }
 
-export default FlowPlaygroundEditor;
+export default FlowPlaygroundEditorTrial;

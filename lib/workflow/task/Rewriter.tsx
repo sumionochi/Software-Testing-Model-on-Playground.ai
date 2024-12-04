@@ -33,6 +33,7 @@ export const RewriterTask: TaskDefinition = {
       variant: "select",
       options: ["as-is", "more-formal", "more-casual"],
       defaultValue: "as-is",
+      connectable: false
     },
     {
       name: "Length",
@@ -41,6 +42,7 @@ export const RewriterTask: TaskDefinition = {
       variant: "select",
       options: ["as-is", "shorter", "longer"],
       defaultValue: "as-is",
+      connectable: false
     },
     {
       name: "Format",
@@ -49,12 +51,14 @@ export const RewriterTask: TaskDefinition = {
       variant: "select",
       options: ["as-is", "plain-text", "markdown"],
       defaultValue: "as-is",
+      connectable: false
     },
     {
       name: "Context",
       type: TaskParamType.STRING,
       required: false,
       variant: "textarea",
+      connectable: false
     },
   ],
   outputs: [

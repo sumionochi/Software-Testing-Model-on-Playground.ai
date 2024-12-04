@@ -3,7 +3,7 @@
 import { Badge } from "@/components/ui/badge";
 import { TaskRegistry } from "@/lib/workflow/task/registry";
 import { PlaygroundTaskType } from "@/schema/playgroundTask";
-import { CoinsIcon, CopyIcon, Delete, GripVerticalIcon } from "lucide-react";
+import { CoinsIcon, CopyIcon, Delete, GripVerticalIcon, Trash } from "lucide-react";
 import React from "react";
 import { Button } from "../ui/button";
 import { useReactFlow } from "@xyflow/react";
@@ -23,10 +23,6 @@ function NodeHeader({ taskType, nodeId }: { taskType: PlaygroundTaskType , nodeI
           </p>
           <div className="flex gap-1 items-center">
             {task.isEntryPoint && <Badge>Entry point</Badge>}
-            <Badge className="gap-2 flex items-center text-xs">
-              <CoinsIcon size={16} />
-              TODO
-            </Badge>
             {!task.isEntryPoint && (
               <>
               
@@ -39,7 +35,7 @@ function NodeHeader({ taskType, nodeId }: { taskType: PlaygroundTaskType , nodeI
                   });
                 }}
               >
-                <Delete/>
+                <Trash/>
               </Button>
               <Button
               variant={"ghost"}
