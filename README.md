@@ -2,6 +2,29 @@
 
 **Empowering Automated Unit Test Generation with Specialized Language Models and UniTSyn**
 
+**This web app can currently work on the latest Chrome Dev and Chrome Canary builds. It makes use of on-device, in-browser offline AI (Gemini Nano). For ensuring all features work, follow these steps:**
+
+- go to chrome://flags/#optimization-guide-on-device-model and set it to "Enabled BypassPerfRequirement"
+- go to chrome://flags/#text-safety-classifier and disable it.
+- enable chrome://flags/#prompt-api-for-gemini-nano, chrome://flags/#summarization-api-for-gemini-nano, chrome://flags/#rewriter-api-for-gemini-nano, chrome://flags/#writer-api-for-gemini-nano, chrome://flags/#language-detection-api
+- go to chrome://flags/#translation-api and set it to "Enabled without language pack limit"
+- incase of prompt and summarizer api faliure -> paste these in console to force download  
+```
+await ai.languageModel.create(); 
+await ai.summarizer.create(); 
+```
+
+**Prerequisites for running locally (create .env file and paste)**
+
+```
+Supabase Configuration
+NEXT_PUBLIC_SUPABASE_URL="<your-supabase-url>"
+NEXT_PUBLIC_SUPABASE_ANON_KEY="<your-supabase-anon-key>"
+
+Database Configuration
+DATABASE_URL="postgresql://<username>:<password>@<host>:<port>/<database>?pgbouncer=true&connection_limit=1"
+```
+
 ---
 
 ## Table of Contents
