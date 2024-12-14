@@ -10,6 +10,7 @@ import { TranslationTask } from "./Translation";
 import { WriterTask } from "./Writer";
 import { RewriterTask } from "./Rewriter";
 import { PromptTask } from "./Prompt";
+import { SoftwareTestingModelTask } from "./SoftwareTestingModelTask";
 
 export const TaskRegistry: Record<PlaygroundTaskType, TaskDefinition> = {
     LAUNCH_BROWSER: LaunchBrowserTask,
@@ -21,4 +22,5 @@ export const TaskRegistry: Record<PlaygroundTaskType, TaskDefinition> = {
     WRITER: WriterTask,
     REWRITER: RewriterTask,
     PROMPT: PromptTask,
+    SOFTWARE_TESTING_MODEL: SoftwareTestingModelTask,
 };

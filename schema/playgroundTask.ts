@@ -12,6 +12,7 @@ export enum PlaygroundTaskType {
     WRITER = "WRITER",
     REWRITER = "REWRITER",
     PROMPT = "PROMPT",
+    SOFTWARE_TESTING_MODEL = "SOFTWARE_TESTING_MODEL"
 }
 
 export enum TaskParamType {
