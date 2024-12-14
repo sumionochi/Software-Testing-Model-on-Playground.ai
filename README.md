@@ -62,20 +62,22 @@ It utilize **Specialized Language Models (SLM)** fine-tuned specifically for uni
 
 ### Data Source: UniTSyn
 
-**UniTSyn** is a large-scale, open-sThece dataset designed to enhance the capabilities of language models in unit test synthesis. It comprises 2.7 million focal-test pairs across five mainstream programming languages. By associating tests with their corresponding functions, UniTSyn provides the critical context needed for SLMs to infer expected behaviors and verify logical paths effectively.
+**UniTSyn** is a large-scale, open-source dataset designed to enhance the capabilities of language models in unit test synthesis. It comprises 2.7 million focal-test pairs across five mainstream programming languages. By associating tests with their corresponding functions, UniTSyn provides the critical context needed for SLMs to infer expected behaviors and verify logical paths effectively.
 
 **Key Features of UniTSyn:**
 
 - **High Volume**: 2.7 million focal-test pairs.
 - **Multi-Language Support**: Covers five mainstream programming languages.
 - **Contextual Pairing**: Associates each test with its corresponding function for better understanding.
-- **Open-SThece Repository**: Access the dataset and contribute via The [GitHub repository](https://github.com/SecurityLab-UCD/UniTSyn).
+- **Open-Source Repository**: Access the dataset and contribute via The [GitHub repository](https://github.com/SecurityLab-UCD/UniTSyn).
 
 For an in-depth understanding, refer to The research paper: [Automated Unit Test Generation with UniTSyn](https://arxiv.org/abs/2402.03396).
 
 ### Integration with Playground.ai
 
-By integrating The SLM trained on UniTSyn with **playground.ai**, It offer developers a seamless and interactive environment to generate unit tests effortlessly. Users can input function descriptions or code snippets, and the integrated system will produce relevant and comprehensive unit tests, enhancing the overall development and testing workflow.
+By integrating The SLM trained on UniTSyn with **playground.ai**, It offer developers a seamless and interactive environment to generate, test, enhance and build unit tests effortlessly. 
+
+Playground AI is a visual workflow platform built to integrate **Gemini Nano's API** for executing multiple AI tasks, managing execution history, and enabling offline or online modes. It empowers users to create scalable AI agent workflows while generating units tests through a simple drag-and-drop interface.
 
 ---
 
@@ -89,6 +91,7 @@ By integrating The SLM trained on UniTSyn with **playground.ai**, It offer devel
    - **User Input**: Developers provide function descriptions or code snippets via playground.ai’s intuitive UI.
    - **Test Generation**: The integrated SLM processes the input and generates corresponding unit tests.
    - **Output**: Generated tests are displayed within playground.ai, allowing for easy review and integration into the codebase.
+- **Play**: Generate, test, enhance and build unit tests effortlessly
 
 4. **Continuous Improvement**: Feedback from generated tests is used to further refine the SLM, ensuring ongoing enhancements in test accuracy and coverage.
 
@@ -98,20 +101,17 @@ By integrating The SLM trained on UniTSyn with **playground.ai**, It offer devel
 
 - **Enhanced Test Accuracy**: Generates precise and comprehensive unit tests tailored to the provided functions.
 - **Time Efficiency**: Automates the tedious process of writing unit tests, allowing developers to focus on core functionalities.
-- **Multi-Language Support**: Capable of generating tests across multiple programming languages, catering to diverse development environments.
-- **Open-SThece Collaboration**: Utilizes the open-sThece UniTSyn dataset, fostering community-driven improvements and transparency.
-- **Seamless Integration**: Works within the familiar playground.ai interface, ensuring a smooth adoption process.
+- **Multi-Language Support**: Capable of generating tests across multiple programming languages, catering to diverse development environments through translation and language detection api of gemini nano in-browser AI.
+- **Open-Source Collaboration**: Utilizes the open-source UniTSyn dataset, fostering community-driven improvements and transparency.
 
 ---
 
 ## Alignment with OpenLedger’s Goals
 
-**OpenLedger** aims to advance open-sThece technologies and foster collaborative innovation. **Playground TestAI** aligns with these goals by:
+Openledger is a data blockchain for AI that provides infrastructure for creating specialized language models. By leveraging datanets to collect and curate data, Openledger enables the development of these models, which are then consumed by AI agents, chatbots, copilots, and various other applications.
 
-- **Promoting Open Data**: Leveraging the open-sThece UniTSyn dataset to enhance model training.
-- **EncTheaging Collaboration**: Inviting developers to contribute to and improve the SLM and dataset.
-- **Advancing Technology**: Pushing the boundaries of automated software testing through specialized language models.
-- **Enhancing Developer Productivity**: Providing tools that streamline the development and testing processes, leading to more reliable and maintainable codebases.
+- **Promoting Open Data**: Leveraging the open-source UniTSyn as data source dataset to enhance model training.
+- **Enhancing Collaboration**: Inviting developers to contribute, build upon and improve the SLM through Playground.ai to be hosted on Openledger Testnet to not only generate, test, enhance and build unit tests effortlessly but utilize coming soon models from Openledger -> building workflows.
 
 ---
 
