@@ -1,149 +1,98 @@
-# Playground AI
+# Software Testing Model integration with Playground.ai
 
-Playground AI is a visual workflow platform built to integrate **Gemini Nano's API** for executing multiple AI tasks, managing execution history, and enabling offline or online modes. It empowers users to create scalable AI agent workflows through a simple drag-and-drop interface.
-
-![Screenshot 2024-12-05 035403](https://github.com/user-attachments/assets/2a4931bd-f0d2-43e6-b1c2-ca71611ca735)
-![Screenshot 2024-12-05 000637](https://github.com/user-attachments/assets/87aa666e-134c-411c-ac3a-e3255d80d27a)
+**Empowering Automated Unit Test Generation with Specialized Language Models and UniTSyn**
 
 ---
 
-## 🌟 **Inspiration**
-The goal of Playground AI is to make Gemini Nano's **offline** and **browser API capabilities** more accessible to a larger audience. The platform encourages developers and non-developers to build AI agent workflows by connecting tasks such as:
-- Prompt generation
-- Translation
-- Language detection
-- Writing
-- Rewriting
-- Summarization
+## Table of Contents
 
-![Screenshot 2024-12-05 035356](https://github.com/user-attachments/assets/87d52a79-d4db-4bff-82a7-fba10223e108)
-
----
-
-## 🚀 **What It Does**
-
-![pic](https://github.com/user-attachments/assets/f5c1ff01-5ec8-4633-b2cc-24486e03ed41)
-
-Playground AI allows users to:
-1. **Create Workflows**:
-   - Drag and drop tasks like summarization, translation, and language detection.
-   - Define data flow by connecting inputs and outputs.
-2. **Execute Workflows**:
-   - Run tasks sequentially, where the output of one task serves as input for the next.
-3. **Save and Manage Workflows**:
-   - Save workflows and execution history for future use.
-   - Edit existing workflows and create multiple workflows on the same playground.
-4. **Offline and Online Modes**:
-   - Use offline mode for workflow creation without requiring internet connectivity.
-   - Log in with a Google account to save progress and workflows online.
-5. **Handle Task Dependencies**:
-   - Prevent invalid connections, such as many-to-many nodes or infinite loops.
-6. **Visualize Workflow Execution**:
-   - View detailed execution logs for each task via the console.
-
-![Screenshot 2024-12-05 035359](https://github.com/user-attachments/assets/bd7f655c-2677-43af-8dd2-67bc7e69cb19)
+- [Project Overview](#project-overview)
+- [Problem Statement](#problem-statement)
+- [The Solution](#the-solution)
+  - [Specialized Language Models (SLM)](#specialized-language-models-slm)
+  - [Data Source: UniTSyn](#data-source-unitsyn)
+  - [Integration with Playground.ai](#integration-with-playgroundai)
+- [How It Works](#how-it-works)
+- [Benefits](#benefits)
+- [Alignment with OpenLedger’s Goals](#alignment-with-openledgers-goals)
+- [References](#references)
 
 ---
 
-## 🤝 **Walkthrough**
-1. **Login Options**:
-   - Start by choosing offline mode or logging in with a Google account.
-2. **Building a Smaller Workflow**:
-   - Add a **summarization task**, then drag in a **translation task** and a **language detection task**.
-   - Connect their endpoints:
-     - Output from translation to language detection.
-     - Input: English
-     - Output: Japanese
-   - Add a **prompt generation task** to generate text for summarization.
-3. **Executing Workflows**:
-   - Enter a prompt, or let the system automatically connect inputs and outputs.
-   - Run the workflow to see the sequence of tasks executed in the console.
-   - Results include:
-     - Generated prompt
-     - Summarized content
-     - Translated text (e.g., in Japanese)
-     - Language detection output
-4. **Advanced Features**:
-   - Edit workflows and create complex connections.
-   - Add multiple workflows to the same playground.
-   - Save workflows and access past execution history.
+## Project Overview
+
+**Software Testing Model** is Ideated to be an addition to OpenLedger's upcoming models that leverages **Specialized Language Models (SLM)** trained on the open-source **UniTSyn** dataset to generate high-quality unit tests automatically. By integrating with a developer-friendly drag-and-drop workflow tester - **playground.ai** over blockchain to be hosted on Openledger Testnet, it provides developers with an intuitive interface to enhance, test and build their software testing workflows and so much more.
 
 ---
 
-## 🏆 **Features**
-1. **Visual Workflow Editor**:
-   - Drag-and-drop interface for building workflows.
-   - Intuitive connections between task inputs and outputs.
-2. **Task Execution Engine**:
-   - Handles sequential execution of tasks.
-   - Manages task dependencies to ensure valid data flow.
-3. **Offline Mode**:
-   - Full functionality without internet connectivity.
-4. **Error Handling and Validation**:
-   - Prevents infinite loops and invalid task connections.
-5. **Execution History**:
-   - Save and manage past workflow execution details.
-6. **Multi-Workflow Support**:
-   - Create and run multiple workflows simultaneously on the same playground.
+## Problem Statement
+
+While Large Language Models (LLMs) like GPT-4 have shown remarkable capabilities in generating code, their effectiveness in producing accurate and comprehensive unit tests remains limited. Existing LLMs often struggle with generating tests that are both precise and complete because they lack targeted training on test-specific code snippets.
 
 ---
 
-## 🔑 **Key Functionality**
-- **Writing & Rewriting **:
-  - Automatically create AI-driven content with shared context and tone, length, format manipulation.
-- **Prompt Generation**:
-  - Automatically create AI-driven content.
-- **Summarization**:
-  - Condense input text into concise summaries.
-- **Translation**:
-  - Translate text from one language to another (e.g., English to Japanese).
-- **Language Detection**:
-  - Detect the language of a given text input.
+## The Solution
+
+### Specialized Language Models (SLM)
+
+It utilize **Specialized Language Models (SLM)** fine-tuned specifically for unit test generation. These models are trained to understand the nuances of software testing, enabling them to produce tests that accurately reflect the intended functionality and edge cases of the code under test.
+
+### Data Source: UniTSyn
+
+**UniTSyn** is a large-scale, open-sThece dataset designed to enhance the capabilities of language models in unit test synthesis. It comprises 2.7 million focal-test pairs across five mainstream programming languages. By associating tests with their corresponding functions, UniTSyn provides the critical context needed for SLMs to infer expected behaviors and verify logical paths effectively.
+
+**Key Features of UniTSyn:**
+
+- **High Volume**: 2.7 million focal-test pairs.
+- **Multi-Language Support**: Covers five mainstream programming languages.
+- **Contextual Pairing**: Associates each test with its corresponding function for better understanding.
+- **Open-SThece Repository**: Access the dataset and contribute via The [GitHub repository](https://github.com/SecurityLab-UCD/UniTSyn).
+
+For an in-depth understanding, refer to The research paper: [Automated Unit Test Generation with UniTSyn](https://arxiv.org/abs/2402.03396).
+
+### Integration with Playground.ai
+
+By integrating The SLM trained on UniTSyn with **playground.ai**, It offer developers a seamless and interactive environment to generate unit tests effortlessly. Users can input function descriptions or code snippets, and the integrated system will produce relevant and comprehensive unit tests, enhancing the overall development and testing workflow.
 
 ---
 
-## 🛠️ **How It Works**
-1. **Start with a Workflow**:
-   - Add tasks (e.g., summarization, translation).
-   - Define the flow by connecting outputs to inputs.
-2. **Execute Tasks**:
-   - Input data manually or let the system use prior outputs.
-   - Run the workflow and monitor task execution in real time.
-3. **Visual Feedback**:
-   - Use the console to view execution logs for each task.
+## How It Works
+
+1. **Data Preparation**: UniTSyn collects focal-test pairs by leveraging the Language Server Protocol, ensuring accurate associations between functions and their tests without the need for per-project execution setups or language-specific heuristics.
+
+2. **Model Training**: The SLM is fine-tuned on the UniTSyn dataset, enabling it to understand the intricacies of unit testing across different programming languages.
+
+3. **Integration with Playground.ai**:
+   - **User Input**: Developers provide function descriptions or code snippets via playground.ai’s intuitive UI.
+   - **Test Generation**: The integrated SLM processes the input and generates corresponding unit tests.
+   - **Output**: Generated tests are displayed within playground.ai, allowing for easy review and integration into the codebase.
+
+4. **Continuous Improvement**: Feedback from generated tests is used to further refine the SLM, ensuring ongoing enhancements in test accuracy and coverage.
 
 ---
 
-## 🛠️ **Technical Details**
+## Benefits
 
-### Frontend
-- **React**: For building a dynamic and responsive user interface.
-- **React Flow**: For creating the visual workflow editor.
-- **TypeScript**: For type-safe, maintainable code.
-- **Shadcn/UI**: Consistent and reusable UI components.
-- **Sonner**: Toast notifications for user feedback.
-- **Lucide Icons**: Intuitive icons for improving usability.
-
-### Backend
-- **Node.js and Express**: API server for workflow management.
-- **Prisma ORM**: Database management with PostgreSQL.
-- **Supabase**: Authentication and real-time database functionality.
-- **Gemini Nano APIs**:
-  - Integrated for prompt generation, summarization, translation, and language detection.
+- **Enhanced Test Accuracy**: Generates precise and comprehensive unit tests tailored to the provided functions.
+- **Time Efficiency**: Automates the tedious process of writing unit tests, allowing developers to focus on core functionalities.
+- **Multi-Language Support**: Capable of generating tests across multiple programming languages, catering to diverse development environments.
+- **Open-SThece Collaboration**: Utilizes the open-sThece UniTSyn dataset, fostering community-driven improvements and transparency.
+- **Seamless Integration**: Works within the familiar playground.ai interface, ensuring a smooth adoption process.
 
 ---
 
-## 🏆 **Accomplishments**
-1. Successfully integrated Gemini Nano APIs for multiple AI capabilities.
-2. Developed an intuitive drag-and-drop workflow editor.
-3. Implemented offline functionality for broader accessibility.
-4. Built robust error-handling mechanisms to ensure workflow integrity.
-5. Enabled seamless editing and saving of workflows.
+## Alignment with OpenLedger’s Goals
+
+**OpenLedger** aims to advance open-sThece technologies and foster collaborative innovation. **Playground TestAI** aligns with these goals by:
+
+- **Promoting Open Data**: Leveraging the open-sThece UniTSyn dataset to enhance model training.
+- **EncTheaging Collaboration**: Inviting developers to contribute to and improve the SLM and dataset.
+- **Advancing Technology**: Pushing the boundaries of automated software testing through specialized language models.
+- **Enhancing Developer Productivity**: Providing tools that streamline the development and testing processes, leading to more reliable and maintainable codebases.
 
 ---
 
-## 📚 **Lessons Learned**
-1. **API Integration**: Combining multiple AI services within workflows.
-2. **State Management**: Handling complex state changes in a visual editor.
-3. **Offline Functionality**: Providing offline support without sacrificing usability.
-4. **User Experience**: The importance of intuitive UI/UX for user engagement.
+## References
+
+- **Research Paper**: [Automated Unit Test Generation with UniTSyn](https://arxiv.org/abs/2402.03396)
+- **GitHub Repository**: [UniTSyn by SecurityLab-UCD](https://github.com/SecurityLab-UCD/UniTSyn)
